@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number System Conversion</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 30px;
+        }
+        .output-section {
+            margin-top: 20px;
+        }
+        body {
+            justify-content: center;
+            min-height: 100vh;
+            background-size: cover;
+            backdrop-filter: blur(5px);
+            background-repeat: no-repeat;
+            background-image: url(https://media.giphy.com/media/gVerUrglGXR0nwZle7/giphy.gif);
+        }
+        .navbar {
+            background-color: #010913;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            font-family: cursive;
+            font-style: italic;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div style="font-family: fantasy;">HI-HO!</div>
+        <div>
+            <a href="index.html">Home</a>
+            <a href="#CONTACT">CONTACT AND ABOUT</a>
+            <a href="website.html">NUMBER SYSTEM CONVERSION</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="text-center">Number System Conversion</h2>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="inputNumber">Enter a number:</label>
+                    <input type="text" class="form-control" id="inputNumber" placeholder="Enter number to convert">
+                </div>
+                
+                <div class="form-group">
+                    <label for="inputBase">Choose input base:</label>
+                    <select id="inputBase" class="form-control">
+                        <option value="10">Decimal</option>
+                        <option value="2">Binary</option>
+                        <option value="8">Octal</option>
+                        <option value="16">Hexadecimal</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary btn-block" onclick="convertNumber()">Convert</button>
+            </div>
+        </div>
+
+        <div class="output-section">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div id="output"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function convertNumber() {
+            let inputNumber = document.getElementById("inputNumber").value;
+            let inputBase = parseInt(document.getElementById("inputBase").value);
+            
+            if (inputNumber === '') {
+                alert("Please enter a number.");
+                return;
+            }
+            
+            if (!isValidNumber(inputNumber, inputBase)) {
+                alert(`Invalid number for base ${inputBase}`);
+                return;
+            }
+
+            let decimalValue = parseInt(inputNumber, inputBase);
+            let binary = decimalValue.toString(2);
+            let octal = decimalValue.toString(8);
+            let hexadecimal = decimalValue.toString(16).toUpperCase();
+
+            document.getElementById("output").innerHTML = `
+                <div class="alert alert-info">
+                    <strong>Results:</strong>
+                    <ul>
+                        <li><strong>Decimal:</strong> ${decimalValue}</li>
+                        <li><strong>Binary:</strong> ${binary}</li>
+                        <li><strong>Octal:</strong> ${octal}</li>
+                        <li><strong>Hexadecimal:</strong> ${hexadecimal}</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        function isValidNumber(number, base) {
+            let regex;
+            switch (base) {
+                case 2: regex = /^[01]+$/; break;
+                case 8: regex = /^[0-7]+$/; break;
+                case 10: regex = /^[0-9]+$/; break;
+                case 16: regex = /^[0-9A-Fa-f]+$/; break;
+                default: return false;
+            }
+            return regex.test(number);
+        }
+    </script> 
+</body>
+</html> 
